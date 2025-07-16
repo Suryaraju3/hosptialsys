@@ -41,8 +41,7 @@ class Pharmacy(models.Model):
     Description=models.TextField()
     Qty=models.IntegerField()
     Total=models.DecimalField(max_digits=8,decimal_places=2)
-    
-    
+     
     def __str__(self):
         return self.pharmacyid
     
