@@ -11,7 +11,8 @@ class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = PatientDetails
         fields ='__all__'
-
+   
+       
 class PharmacySerializer(serializers.ModelSerializer):
     class Meta:
         model = Pharmacy
