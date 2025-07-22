@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from rest_framework import generics
-from .serializes import DoctorSerializer,PatientSerializer,PharmacySerializer,userSerializer
+from .serializes import DoctorSerializer,PatientSerializer,PharmacySerializer,UserSerializer
 from .models import PatientDetails,Doctors,Pharmacy
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
@@ -9,6 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
 
 from rest_framework.decorators import api_view
 
@@ -41,7 +45,16 @@ class PharmacyDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pharmacy.objects.all()
     permission_classes = [IsAuthenticated]
     
-class Usercreate(generics.ListCreateAPIView):
+class Registeration(generics.ListCreateAPIView):
     queryset = User.objects.all()
-    serializer_class = userSerializer
+    serializer_class = UserSerializer
     
+
+class TokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['username'] = self.user.username
+        return data
+
+class LoginView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer

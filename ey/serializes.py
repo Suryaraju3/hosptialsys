@@ -18,7 +18,7 @@ class PharmacySerializer(serializers.ModelSerializer):
         model = Pharmacy
         fields = '__all__'
 
-class userSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password=serializers.CharField(write_only=True)
     class Meta:
         model = User
@@ -28,3 +28,5 @@ class userSerializer(serializers.ModelSerializer):
                                         password=validated_data['password'],
                                         email=validated_data.get('email',''))
         return user
+    
+    
